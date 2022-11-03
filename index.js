@@ -25,3 +25,6 @@ app.use("/api/post", postRoutes);
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
+app.get("/", (req, res) => {
+  res.send("Social Media Server Is Ruing");
+});
