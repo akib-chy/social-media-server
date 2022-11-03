@@ -1,4 +1,6 @@
 const express = require("express");
+const CommentController = require("../controllers/commentController");
+const PostController = require("../controllers/commentController");
 const router = express.Router();
 const UserController = require("../controllers/userController");
 const checkUserAuth = require("../middlewares/auth-middlewares");
@@ -15,8 +17,5 @@ router.post(
   UserController.sendUserPasswordResetEmail
 );
 router.post("/reset-password/:id/:token", UserController.userPasswordReset);
-
-// Protected Routes
-router.post("/changePassword", UserController.changeUserPassword);
 
 module.exports = router;

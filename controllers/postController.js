@@ -1,6 +1,5 @@
 const { ObjectId } = require("mongodb");
 const socialPostModel = require("../models/socialPost.models");
-const date = new Date();
 class PostController {
   // UPLOAD POST
   static uploadPost = async (req, res) => {
@@ -8,7 +7,6 @@ class PostController {
       const data = req.body;
       const postData = new socialPostModel({
         ...data,
-        date,
       });
       await postData.save();
       res.status(201).send({
@@ -83,6 +81,22 @@ class PostController {
         message: "Post Delete Failed, Try Again",
       });
     }
+  };
+  //   ADD POST COMMENT
+  static addComment = async (req, res) => {
+    const query = { _id: ObjectId(req.params.id) };
+
+    const doc = {
+      $set: {
+        date: "20/45/54560",
+        comment: [{ name: "akib" }],
+      },
+    };
+    const result = await socialPostModel.updateOne(query, doc, {
+      upsert: true,
+    });
+    res.send(result);
+    //   const result = await socialPostModel.updateOne(query)
   };
 }
 
