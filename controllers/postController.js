@@ -1,6 +1,8 @@
+const { ObjectId } = require("mongodb");
 const socialPostModel = require("../models/socialPost.models");
 const date = new Date();
 class PostController {
+  // UPLOAD POST
   static uploadPost = async (req, res) => {
     try {
       const data = req.body;
@@ -21,6 +23,7 @@ class PostController {
       });
     }
   };
+  //   FIND ALL POST
   static findAllPost = async (req, res) => {
     try {
       const result = await socialPostModel.find();
@@ -32,8 +35,52 @@ class PostController {
     } catch (error) {
       console.log(error);
       res.status(50).json({
-        status: "faild",
+        status: "failed",
         message: "Find Fail All Post",
+      });
+    }
+  };
+  //   UPDATE POST
+  static updatePost = async (req, res) => {
+    try {
+      const updatedPostData = req.body;
+      const filter = { _id: ObjectId(req.params.id) };
+      const doc = {
+        $set: {
+          ...updatedPostData,
+        },
+      };
+      const result = await socialPostModel.updateOne(filter, doc, {
+        upsert: true,
+      });
+      res.status(201).json({
+        status: "success",
+        message: "Successfully Update Post",
+        result: result,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        status: "failed",
+        message: "Failed Update Post, Something Went Wrong",
+      });
+    }
+  };
+  //   DELETE POST
+  static deletePost = async (req, res) => {
+    try {
+      const query = { _id: ObjectId(req.params.id) };
+      const result = await socialPostModel.deleteOne(query);
+      res.status(201).json({
+        status: "success",
+        message: "Post Delete Successfull",
+        result: result,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        status: "failed",
+        message: "Post Delete Failed, Try Again",
       });
     }
   };

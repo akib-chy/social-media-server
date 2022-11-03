@@ -7,5 +7,11 @@ router
   .route("/")
   .post(PostController.uploadPost)
   .get(PostController.findAllPost);
+router
+  .route("/:id")
+  .patch(PostController.updatePost)
+  .delete(PostController.deletePost);
+// router.patch("/update/:id", PostController.updatePost);
+// router.delete("/delete/:id", PostController.deletePost);
 
 module.exports = router;
