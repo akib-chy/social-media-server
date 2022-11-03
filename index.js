@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/connectdb");
 const userRoutes = require("./routes/userRoute");
+const postRoutes = require("./routes/postRoute");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -19,6 +20,7 @@ app.use(express.json());
 
 // Load Routes
 app.use("/api/user", userRoutes);
+app.use("/api/post", postRoutes);
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
